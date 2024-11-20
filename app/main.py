@@ -1,18 +1,24 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
+from model.user import User
 
 app = FastAPI()
 
 @app.get("/hi")
-def greet():
+async def greet():
     return "Hello World"
 
+@app.post('/user')
+async def post_user(user: User):
+    print(f'{user.name=}')
+    return user
+
 @app.get('/')
-def root():
+async def root():
     return FileResponse("static/index.html")
 
 @app.get('/favicon.ico', response_class=FileResponse)
-def favicon():
+async def favicon():
     return "static/favicon.ico"
     
 
